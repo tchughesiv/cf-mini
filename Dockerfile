@@ -16,7 +16,7 @@ WORKDIR /root
 RUN sed -i 's/.\/scripts\/install.sh/~\/dynamic_adds.sh\n.\/scripts\/install.sh/g' ./bootstrap.sh
 RUN ./bootstrap.sh
 
-RUN rm -rf /var/lib/apt/lists/* /var/vcap/data/packages/rootfs_cflinuxfs2 /var/vcap/data/packages/buildpack_go /var/vcap/data/packages/buildpack_java /var/vcap/data/packages/buildpack_php /var/vcap/data/packages/buildpack_python
+RUN rm -rf /var/lib/apt/lists/* /var/vcap/data/packages/rootfs_cflinuxfs2 /var/vcap/data/packages/buildpack_go /var/vcap/data/packages/buildpack_java /var/vcap/data/packages/buildpack_php /var/vcap/data/packages/buildpack_python /root/cf_nise_installer/cf-release/.final_builds
 
 EXPOSE 80 443 4443
 WORKDIR /root/cf_nise_installer
