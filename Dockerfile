@@ -2,6 +2,7 @@
 # version 0.1
 FROM ubuntu:12.04.5
 MAINTAINER Tommy Hughes <tchughesiv@gmail.com>
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN apt-get update && apt-get -yq install curl dnsmasq-base
 RUN sed -i 's/^mesg n/tty -s \&\& mesg n/g' /root/.profile
