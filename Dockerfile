@@ -5,7 +5,7 @@ MAINTAINER Tommy Hughes <tchughesiv@gmail.com>
 
 USER root
 
-RUN apt-get update && apt-get -yq install curl dnsmasq-base
+RUN apt-get update && apt-get -yq install curl dnsmasq-base sudo
 RUN sed -i 's/^mesg n/tty -s \&\& mesg n/g' /root/.profile
 ADD ./README.md ~/
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
