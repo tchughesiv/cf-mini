@@ -1,6 +1,6 @@
 # Cloud Foundry core stack
 # version 0.1
-FROM tchughesiv/cf-mini-base
+FROM tchughesiv/cf-mini-base:v205
 MAINTAINER Tommy Hughes <tchughesiv@gmail.com>
 
 WORKDIR /root
