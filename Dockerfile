@@ -10,7 +10,7 @@ ADD ./README.md ./dynamic_adds.sh /root/
 ENV INSTALLER_BRANCH=v205
 ENV NISE_DOMAIN=cf.mini
 ENV NISE_PASSWORD=c1oudc0w
-RUN curl -s -k -B https://raw.githubusercontent.com/yudai/cf_nise_installer/${INSTALLER_BRANCH}/scripts/bootstrap.sh > /root/bootstrap.sh && chmod u+x /root/bootstrap.sh /root/dynamic_adds.sh
+RUN curl -s -k -B https://raw.githubusercontent.com/tchughesiv/cf_nise_installer/${INSTALLER_BRANCH}/scripts/bootstrap.sh > /root/bootstrap.sh && chmod u+x /root/bootstrap.sh /root/dynamic_adds.sh
 
 WORKDIR /root
 RUN sed -i 's/.\/scripts\/install.sh/~\/dynamic_adds.sh\n.\/scripts\/install.sh/g' ./bootstrap.sh
