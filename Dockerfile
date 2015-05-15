@@ -20,6 +20,7 @@ RUN sed -i 's/.\/scripts\/install.sh/\/root\/dynamic_adds.sh\n.\/scripts\/instal
 RUN ./bootstrap.sh
 
 RUN rm -rf /var/lib/apt/lists/* /var/vcap/data/packages/buildpack_go /var/vcap/data/packages/buildpack_java /var/vcap/data/packages/buildpack_php /var/vcap/data/packages/buildpack_python /root/cf_nise_installer/cf-release/.final_builds
+RUN apt-get clean
 
 EXPOSE 80 443 4443
 WORKDIR /root/cf_nise_installer
