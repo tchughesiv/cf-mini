@@ -6,7 +6,9 @@ echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
 umount /etc/resolv.conf
 echo "search $NISE_DOMAIN
-nameserver 127.0.0.1" > /etc/resolv.conf
+nameserver 127.0.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4" > /etc/resolv.conf
 /etc/init.d/dnsmasq restart
 
 iptables -t nat -F PREROUTING 2> /dev/null || true
