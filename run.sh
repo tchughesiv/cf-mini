@@ -3,6 +3,8 @@ NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d
 
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
+
+umount /etc/resolv.conf
 echo "search $NISE_DOMAIN
 nameserver 127.0.0.1
 nameserver 8.8.8.8" > /etc/resolv.conf
