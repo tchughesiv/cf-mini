@@ -18,6 +18,4 @@ RUN chmod u+x /root/*.sh
 RUN /root/insert.sh
 
 EXPOSE 80 443 4443
-
-ENTRYPOINT 
 CMD ["/root/run.sh"]
