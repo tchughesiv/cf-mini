@@ -60,3 +60,6 @@ mv $file1.new $file1
 mv $file2.new $file2
 mv $file3.new $file3
 # mv $file4.new $file4
+
+echo "server=8.8.8.8
+server=8.8.4.4" >> /etc/dnsmasq.conf
