@@ -5,10 +5,10 @@ sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 /etc/init.d/dnsmasq restart
 
-iptables -t nat -F warden-prerouting 2> /dev/null || true
-iptables -t nat -F warden-postrouting 2> /dev/null || true
-iptables -t nat -A warden-prerouting -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
-iptables -t nat -A warden-postrouting -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
+iptables -t nat -F PREROUTING 2> /dev/null || true
+iptables -t nat -F POSTROUTING 2> /dev/null || true
+iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
+iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
 
 /var/vcap/bosh/bin/monit -I
 sleep 2

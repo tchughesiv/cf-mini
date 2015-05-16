@@ -14,8 +14,8 @@ do
         echo $line
         echo $line | grep -q "echo 1 > /proc/sys/net/ipv4/ip_forward"
         [ $? -eq 0 ] && echo 'NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
-iptables -t nat -A warden-prerouting -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
-iptables -t nat -A warden-postrouting -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0'
+iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
+iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0'
 done < $file1 > $file1.new
 
 while read line
@@ -23,8 +23,8 @@ do
         echo $line
         echo $line | grep -q "echo 1 > /proc/sys/net/ipv4/ip_forward"
         [ $? -eq 0 ] && echo 'NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
-iptables -t nat -A warden-prerouting -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
-iptables -t nat -A warden-postrouting -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0'
+iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
+iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0'
 done < $file2 > $file2.new
 
 while read line
@@ -32,8 +32,8 @@ do
         echo $line
         echo $line | grep -q "echo 1 > /proc/sys/net/ipv4/ip_forward"
         [ $? -eq 0 ] && echo 'NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
-iptables -t nat -A warden-prerouting -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
-iptables -t nat -A warden-postrouting -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0'
+iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
+iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0'
 done < $file3 > $file3.new
 
 # while read line
