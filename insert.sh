@@ -63,7 +63,3 @@ mv $file3.new $file3
 
 echo "server=8.8.8.8
 server=8.8.4.4" >> /etc/dnsmasq.conf
-
-sudo umount /etc/resolv.conf
-echo "search $NISE_DOMAIN
-nameserver 127.0.0.1" > /etc/resolv.conf
