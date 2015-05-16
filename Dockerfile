@@ -10,8 +10,8 @@ ENV NISE_DOMAIN cf.mini
 ADD run.sh /root/
 ADD insert.sh /root/
 RUN chmod u+x /root/*.sh
+
 RUN /root/insert.sh
 
 EXPOSE 80 443 4443
-WORKDIR /root/cf_nise_installer
 CMD ["/root/run.sh"]
