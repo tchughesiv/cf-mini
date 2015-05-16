@@ -10,6 +10,7 @@ iptables -t nat -F POSTROUTING 2> /dev/null || true
 iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
 iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
 
+/var/vcap/bosh/bin/monit
 /var/vcap/bosh/bin/monit -I
 sleep 2
 echo "Starting postres job..."
