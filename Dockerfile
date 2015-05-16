@@ -15,7 +15,7 @@ ADD run.sh /root/
 ADD insert.sh /root/
 RUN chmod u+x /root/*.sh
 
-RUN /root/insert.sh
+RUN /root/insert.sh && sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh && sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" ./data/jobs/dea_logging_agent/4d4a96b62bea490993fc8c25f04032133815c152/d8128cbfe98ef358ccc5a91e7642edda1ab5d54f/templates/gorouter_ctl.erb
 
 EXPOSE 80 443 4443
 CMD ["/root/run.sh"]
