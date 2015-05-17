@@ -15,7 +15,7 @@ ADD run.sh /root/
 ADD insert.sh /root/
 RUN chmod u+x /root/*.sh
 
-RUN /root/insert.sh && sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
+RUN /root/insert.sh && sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh && rm /root/insert.sh
 
 EXPOSE 80 443 4443
 CMD ["/root/run.sh"]
