@@ -15,7 +15,7 @@ ENV NISE_DOMAIN cf.mini
 ENV NISE_PASSWORD c1oudc0w
 
 ADD run.sh /root/
-RUN chmod u+x /root/*.sh
+RUN chmod u+x /root/*.sh && sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh
 
 EXPOSE 80 443 4443
 CMD ["/root/run.sh"]

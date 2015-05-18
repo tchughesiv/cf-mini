@@ -1,6 +1,4 @@
 #! /bin/sh
-sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh
-
 . ~/.profile
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
