@@ -1,6 +1,13 @@
 #! /bin/sh
-NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
+sed -i '/cd nise_bosh/d' /root/cf_nise_installer/scripts/install_cf_release.sh
+sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh
 
+. ~/.profile
+cd /root/cf_nise_installer/
+./scripts/install_cf_release.sh
+sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
+
+NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
@@ -12,8 +19,8 @@ nameserver 8.8.4.4" > /etc/resolv.conf
 
 # iptables -t nat -F PREROUTING 2> /dev/null || true
 # iptables -t nat -F POSTROUTING 2> /dev/null || true
-iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
-iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
+# iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
+# iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
 
 /var/vcap/bosh/bin/monit
 /var/vcap/bosh/bin/monit -I

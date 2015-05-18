@@ -8,14 +8,14 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8
+
 ENV HOME /root
+ENV INSTALLER_BRANCH v205
 ENV NISE_DOMAIN cf.mini
+ENV NISE_PASSWORD c1oudc0w
 
 ADD run.sh /root/
-ADD insert.sh /root/
 RUN chmod u+x /root/*.sh
-
-RUN /root/insert.sh && sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh && rm /root/insert.sh
 
 EXPOSE 80 443 4443
 CMD ["/root/run.sh"]
