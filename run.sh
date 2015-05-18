@@ -1,5 +1,4 @@
 #! /bin/sh
-sed -i '/cd nise_bosh/d' /root/cf_nise_installer/scripts/install_cf_release.sh
 sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh
 
 . ~/.profile
