@@ -2,7 +2,7 @@
 . ~/.profile
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
-sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
+# sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
 
 NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
@@ -32,4 +32,3 @@ echo "Starting remaining jobs..."
 /var/vcap/bosh/bin/monit start all
 # iptables -t nat -L
 # watch -n 3 '/var/vcap/bosh/bin/monit summary'
-
