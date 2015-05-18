@@ -1,11 +1,8 @@
 #! /bin/sh
 . ~/.profile
-cp -rp /proc ~/proc.bak
-
-
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
-sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
+# sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
 
 rsyslogd
 NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
