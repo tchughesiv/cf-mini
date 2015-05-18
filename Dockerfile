@@ -15,7 +15,7 @@ ENV NISE_DOMAIN cf.mini
 ENV NISE_PASSWORD c1oudc0w
 
 ADD run.sh /root/
-RUN chmod u+x /root/*.sh && sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh
+RUN chmod u+x /root/*.sh && sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh && wget -O /root/cf-cli_amd64.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel cf-cli_amd64.deb" && dpkg -i /root/cf-cli_amd64.deb && rm /root/cf-cli_amd64.deb
 
 EXPOSE 80 443 4443
 CMD ["/root/run.sh"]

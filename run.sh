@@ -1,5 +1,8 @@
 #! /bin/sh
 . ~/.profile
+cp -rp /proc ~/proc.bak
+
+
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
 sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
