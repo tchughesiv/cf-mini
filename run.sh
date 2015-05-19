@@ -36,7 +36,7 @@ sleep 30
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
 sleep 20
-echo "Starting nats job..."
+echo "Starting etcd job..."
 /var/vcap/bosh/bin/monit start etcd
 sleep 10
 echo "Starting remaining jobs..."
