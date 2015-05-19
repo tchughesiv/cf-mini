@@ -47,7 +47,3 @@ echo "Starting remaining jobs..."
 # cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
 # cf create-space dev
 # cf t -s dev
-
-
-
-
