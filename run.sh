@@ -35,7 +35,10 @@ echo "Starting postres job..."
 sleep 30
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
-sleep 30
+sleep 20
+echo "Starting nats job..."
+/var/vcap/bosh/bin/monit start etcd
+sleep 10
 echo "Starting remaining jobs..."
 /var/vcap/bosh/bin/monit start all
 # iptables -t nat -L
