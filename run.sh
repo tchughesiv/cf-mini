@@ -51,6 +51,8 @@ for ((i=0; i < 120; i++)); do
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
 		cf create-space dev
 		cf t -s dev
+        cd /root/cf_nise_installer/test_apps/spring-music/
+        cf push
 		break
     fi
     sleep 10
