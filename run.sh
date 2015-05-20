@@ -42,8 +42,8 @@ echo "Starting nats job..."
 sleep 15
 echo "Starting etcd jobs..."
 /var/vcap/bosh/bin/monit start etcd
-# /var/vcap/bosh/bin/monit start etcd doppler metron_agent etcd_metrics_server loggregator_trafficcontroller
 sleep 15
+# /var/vcap/bosh/bin/monit start etcd doppler metron_agent etcd_metrics_server loggregator_trafficcontroller
 # echo "Starting hm9000 jobs..."
 # /var/vcap/bosh/bin/monit start hm9000_api_server hm9000_metrics_server hm9000_listener uaa uaa_cf-registrar
 # sleep 10
@@ -57,6 +57,7 @@ echo "Starting remaining jobs..."
 echo "Waiting for all processes to start..."
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
+        # CF_TRACE=true cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
         cf create-space dev
         cf t -s dev
