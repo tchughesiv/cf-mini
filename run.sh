@@ -20,13 +20,9 @@ nameserver 8.8.4.4" > /etc/resolv.conf
 # iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
 # iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
 
-sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/gorouter/bin/gorouter_ctl
-sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/gorouter/bin/gorouter_ctl
-sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/gorouter/bin/gorouter_ctl
-
-sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/d' ;
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/d' ;
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_reuse/d' ;
 
 /var/vcap/bosh/bin/monit
 /var/vcap/bosh/bin/monit -I
