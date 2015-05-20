@@ -2,7 +2,7 @@
 . ~/.profile
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
-sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
+# sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
 
 rsyslogd
 NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
@@ -20,10 +20,14 @@ nameserver 8.8.4.4" > /etc/resolv.conf
 # iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
 # iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
 
-sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-sed -i '/net.ipv4.neigh.default.gc_thresh/d' /var/vcap/jobs/nats/bin/nats_ctl
+# sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+# sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+# sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+# sed -i '/net.ipv4.neigh.default.gc_thresh/d' /var/vcap/jobs/nats/bin/nats_ctl
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/a echo' ;
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_reuse/a echo' ;
+find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_thresh/a echo' ;
 
 #? rm -rf /var/vcap/store/etcd
 #? sed -i '/name=/d' /var/vcap/jobs/etcd/bin/etcd_ctl
