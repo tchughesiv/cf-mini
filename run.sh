@@ -48,12 +48,13 @@ echo "Starting remaining jobs..."
 
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
-        echo "Waiting for all processes to start..."
-        echo
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
 		cf create-space dev
 		cf t -s dev
-		echo
+		break
     fi
     sleep 10
+    echo
+    echo "Waiting for all processes to start..."
+    echo
 done
