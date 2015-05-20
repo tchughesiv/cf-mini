@@ -19,7 +19,7 @@ nameserver 8.8.4.4" > /etc/resolv.conf
 # iptables -t nat -F POSTROUTING 2> /dev/null || true
 # iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
 # iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
-sed -i 's/disk_quota_enabled: true/disk_quota_enabled: false/g' /root/cf_nise_installer/manifests/template.yml
+
 # sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/gorouter/bin/gorouter_ctl
 # sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/gorouter/bin/gorouter_ctl
 # sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/gorouter/bin/gorouter_ctl
@@ -45,9 +45,12 @@ echo "Starting remaining jobs..."
 # iptables -t nat -L
 # watch -n 3 '/var/vcap/bosh/bin/monit summary'
 
-echo "Waiting for all processes to start..."
+
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
+        echo
+        echo "Waiting for all processes to start..."
+        echo
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
 		cf create-space dev
 		cf t -s dev
