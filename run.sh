@@ -2,7 +2,7 @@
 . ~/.profile
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
-sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
+# sed -i "s/grep -q '\/instance' \/proc\/self\/cgroup/grep -q '\/docker' \/proc\/self\/cgroup/g" /var/vcap/packages/common/utils.sh
 
 rsyslogd
 NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
@@ -44,9 +44,9 @@ echo "Starting remaining jobs..."
 # iptables -t nat -L
 # watch -n 3 '/var/vcap/bosh/bin/monit summary'
 
-echo "Waiting for all processes to start"
+echo "Waiting for all processes to start..."
 for ((i=0; i < 120; i++)); do
-    if ! (sudo /var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
 		cf create-space dev
 		cf t -s dev
