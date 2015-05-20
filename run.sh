@@ -20,10 +20,14 @@ nameserver 8.8.4.4" > /etc/resolv.conf
 # iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
 # iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
 
-find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/d' ;
-find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/d' ;
-find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_reuse/d' ;
-find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_thresh/d' ;
+sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/dea_next/bin/dea_ctl
+sed -i '/net.ipv4.neigh.default.gc_thresh/d' /var/vcap/jobs/nats/bin/nats_ctl
+
+#? rm -rf /var/vcap/store/etcd
+#? sed -i '/name=/d' /var/vcap/jobs/etcd/bin/etcd_ctl
+#? sed -i '/name=/d' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
@@ -38,7 +42,8 @@ echo "Starting nats job..."
 sleep 15
 echo "Starting etcd jobs..."
 /var/vcap/bosh/bin/monit start etcd
-sleep 10
+# /var/vcap/bosh/bin/monit start etcd doppler metron_agent etcd_metrics_server loggregator_trafficcontroller
+sleep 15
 # echo "Starting hm9000 jobs..."
 # /var/vcap/bosh/bin/monit start hm9000_api_server hm9000_metrics_server hm9000_listener uaa uaa_cf-registrar
 # sleep 10
