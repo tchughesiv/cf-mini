@@ -45,7 +45,7 @@ echo "Starting remaining jobs..."
 # iptables -t nat -L
 # watch -n 3 '/var/vcap/bosh/bin/monit summary'
 
-
+echo "Waiting for all processes to start..."
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
