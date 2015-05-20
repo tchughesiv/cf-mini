@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 . ~/.profile
 cd /root/cf_nise_installer/
 ./scripts/install_cf_release.sh
@@ -46,7 +46,7 @@ echo "Starting remaining jobs..."
 
 echo "Waiting for all processes to start..."
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v running); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
 		cf create-space dev
 		cf t -s dev
