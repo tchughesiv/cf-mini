@@ -9,6 +9,14 @@ NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
+awk 'NR>1 {print $1}' /proc/cgroups | 
+while read -r a 
+do 
+  b="/tmp/warden/cgroup/$a" 
+  mkdir -p "$b" 
+  mount -tcgroup -o"$a" "cgroup:$a" "$b" 
+done 
+
 umount /etc/resolv.conf
 echo "nameserver 127.0.0.1
 nameserver 8.8.8.8
