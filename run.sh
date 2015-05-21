@@ -39,6 +39,7 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 #? sed -i '/name=/d' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
+# sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
 
 /var/vcap/bosh/bin/monit
 /var/vcap/bosh/bin/monit -I
@@ -63,7 +64,9 @@ echo "Starting remaining jobs..."
 /var/vcap/bosh/bin/monit start all
 # watch -n 3 '/var/vcap/bosh/bin/monit summary'
 
+echo
 echo "Waiting for all processes to start..."
+echo
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
         # CF_TRACE=true cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
