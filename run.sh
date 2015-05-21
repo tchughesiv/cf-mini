@@ -4,8 +4,20 @@ while read -r a
 do 
   b="/tmp/warden/cgroup/$a" 
   mkdir -p "$b" 
-  mount -tcgroup -o"$a" "cgroup:$a" "$b" 
-done 
+#  mount -tcgroup -o"$a" "cgroup:$a" "$b" 
+done
+
+mount -tcgroup -operf_event cgroup:perf_event /tmp/warden/cgroup/perf_event
+mount -tcgroup -omemory cgroup:memory /tmp/warden/cgroup/memory
+mount -tcgroup -oblkio cgroup:blkio /tmp/warden/cgroup/blkio
+mount -tcgroup -ohugetlb cgroup:hugetlb /tmp/warden/cgroup/hugetlb
+mount -tcgroup -onet_cls,net_prio cgroup:net_prio /tmp/warden/cgroup/net_prio
+mount -tcgroup -onet_cls,net_prio cgroup:net_cls /tmp/warden/cgroup/net_cls
+mount -tcgroup -ocpu,cpuacct cgroup:cpu /tmp/warden/cgroup/cpu
+mount -tcgroup -ocpu,cpuacct cgroup:cpuacct /tmp/warden/cgroup/cpuacct
+mount -tcgroup -ocpuset cgroup:cpuset /tmp/warden/cgroup/cpuset
+mount -tcgroup -odevices cgroup:devices /tmp/warden/cgroup/devices
+mount -tcgroup -ofreezer cgroup:perf_event /tmp/warden/cgroup/freezer
 
 . ~/.profile
 cd /root/cf_nise_installer/
