@@ -18,8 +18,7 @@ Run:
 
     $ docker run --privileged -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 
-CLI version 6.11.2 works well with the stack
-		https://github.com/cloudfoundry/cli/releases/tag/v6.11.2
+CLI version 6.11.2 works well with the stack:	https://github.com/cloudfoundry/cli/releases/tag/v6.11.2
 
 IMPORTANT:
 
