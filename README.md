@@ -26,7 +26,7 @@ Tested on Ubuntu 15.04 Docker Server w/ following:
 
   <https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md>
 
-  A Docker server running with "devicemapper" as its storage backend (with Udev sync = true) & at least 30gb disk highly recommended. I intend to do further testing with the btrfs and overlay storage options soon. My working Ubuntu environment has two critical things configured that you should verify or performance will suffer:
+  A Docker server running with "devicemapper" & at least 30gb disk highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. My working Ubuntu environment has two critical things configured that you should verify or performance will suffer:
 
   Server process looks like this:
 
@@ -40,7 +40,7 @@ Tested on Ubuntu 15.04 Docker Server w/ following:
      Data Space Available: 30 GB
      Udev Sync Supported: true
 
-  Your container might be able to start with the defaults, but won't last long... if it runs at all. At the very least, change to devicemapper w/o udev or base size changes (full storage might bite you fast though). I intend to put a document together for building a Docker server like stated above.  Check back soon if you need help.
+  Your container might be able to start with the defaults, but won't last long... if it runs at all. At the very least, change to devicemapper w/o udev or base size changes (full storage might bite you fast though).
 
 # dns:
 
