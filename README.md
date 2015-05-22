@@ -20,11 +20,23 @@ Run:
 
 CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
 
-A Docker server running with "devicemapper" as its storage backend (with Udev sync) & at least 30gb disk recommended. My working environment has two critical things configured
-
 IMPORTANT:
 
-  Your Dev space where your IDE/Browser/CLI is run to interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf.mini" domain.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
+  A Docker server running with "devicemapper" as its storage backend (with Udev sync) & at least 30gb disk recommended. My working Ubuntu environment has two critical things configured that need checking:
+
+  Server process looks like this:
+
+    $ ps -ef |grep -i docker
+    docker -d -s devicemapper --storage-opt dm.basesize=30G
+
+  Docker info returns these critical components:
+
+    $ docker info
+    Storage Driver: devicemapper
+     Data Space Available: 29.23 GB
+     Udev Sync Supported: true
+
+  The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf.mini" domain.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
 
 Ubuntu DNS server setup:
 
