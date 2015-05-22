@@ -1,4 +1,4 @@
-# cf-mini
+# CF Mini
 Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
 [![](https://badge.imagelayers.io/tchughesiv/cf-mini.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
@@ -6,7 +6,7 @@ Docker image running Cloud Foundry stack - listens on ports 80/443/4443
     Ubuntu Precise 12.04.05
     Cloud Foundry v205
 
-As simple as Cloud Foundry makes development, it can be extremely complex to stand up the stack for use.
+Cloud Foundry aims to make development easy but can be complex to stand up a working local stack.
 
 CF Mini makes it a 2-step process... Pull & Run with Docker.
 
