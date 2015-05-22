@@ -24,7 +24,7 @@ IMPORTANT:
 
   Your Dev space must have a working internal DNS server setup for wildcard lookups against the "cf.mini" domain.  The following is how I accomplished this on my Mac.  Similar solutions exist for other OS types (the following works for Ubuntu as well, albeit w/ a slightly different implementation). I'll try to add other examples to this page over time.
 
-Macintosh setup:
+Macintosh DNS server setup:
 
     $ brew install dnsmasq
     $ cp $(brew list dnsmasq | grep /dnsmasq.conf.example$) /usr/local/etc/dnsmasq.conf
