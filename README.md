@@ -18,7 +18,7 @@ Run:
 
     $ docker run --privileged -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 
-CLI version 6.11.2 works well with the stack:	https://github.com/cloudfoundry/cli/releases/tag/v6.11.2
+CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
 
 IMPORTANT:
 
@@ -59,7 +59,7 @@ Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first 
 
   You'll know the stack is ready for use when you're able to access this ruby app:
 
-  http://hello.cf.mini/
+  <http://hello.cf.mini/>
 
     "Hello, World!"
 
