@@ -18,7 +18,7 @@ ADD run.sh /root/
 RUN mkdir /root/cf_nise_installer/test_apps && mkdir /root/cf_nise_installer/test_apps/spring-music && mkdir /root/cf_nise_installer/test_apps/cf-env && mv /root/cf_nise_installer/test_app /root/cf_nise_installer/test_apps/ && rm -f /etc/supervisor/conf.d/supervisord.conf
 ADD cf-env /root/cf_nise_installer/test_apps/cf-env/
 ADD spring-music /root/cf_nise_installer/test_apps/spring-music/
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD supervisord.conf /etc/supervisor/conf.d/
 RUN chmod u+x /root/*.sh && sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh && wget -O /root/cf-cli_amd64.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel cf-cli_amd64.deb" && dpkg -i /root/cf-cli_amd64.deb && rm /root/cf-cli_amd64.deb
 
 EXPOSE 80 443 4443
