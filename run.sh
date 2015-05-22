@@ -62,7 +62,6 @@ sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/
 # sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
 
 /var/vcap/bosh/bin/monit
-/var/vcap/bosh/bin/monit -I
 sleep 2
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
@@ -102,3 +101,5 @@ for ((i=0; i < 120; i++)); do
     echo "Waiting for all processes to start..."
     echo
 done
+
+/var/vcap/bosh/bin/monit -I
