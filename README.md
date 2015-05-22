@@ -6,7 +6,7 @@ Docker image running Cloud Foundry stack - listens on ports 80/443/4443
     Ubuntu Precise 12.04.05
     Cloud Foundry v205
 
-Cloud Foundry aims to make development... once you have a working stack anyway. Accomplishing this initial setup/install task of the stack itself can be cumbersome.
+Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
 CF Mini makes it a 2-step process... Pull & Run with Docker.
 
