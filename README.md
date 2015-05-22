@@ -15,14 +15,15 @@ $ docker run --privileged -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mi
 		https://github.com/cloudfoundry/cli/releases/tag/v6.11.2
 
 IMPORTANT:
+
 	Must have a working wildcard DNS server setup for the domain "cf.mini."  The following is how I accomplished this on my Mac.  Similar solutions exist for other OS types (the following works for Ubuntu as well, albeit w/ a slightly different implementation). I'll try to add other examples to this page over time.
 
 Macintosh local wildcard domain
 ```shell
-brew install dnsmasq
+$ brew install dnsmasq
 $ cp $(brew list dnsmasq | grep /dnsmasq.conf.example$) /usr/local/etc/dnsmasq.conf
 
-INTERNAL BOOT2DOCKER (IP may differ for you)
+# INTERNAL BOOT2DOCKER (IP may differ for you)
 $ echo -e '\naddress=/cf.mini/192.168.59.103' >> /usr/local/etc/dnsmasq.conf
 
 # OR EXTERNAL SERVER
