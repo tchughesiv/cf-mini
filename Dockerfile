@@ -22,4 +22,4 @@ ADD supervisord.conf /etc/supervisor/conf.d/
 RUN chmod u+x /root/*.sh && sed -i '/bundle install/d' /root/cf_nise_installer/scripts/install_cf_release.sh && wget -O /root/cf-cli_amd64.deb "https://cli.run.pivotal.io/stable?release=debian64&version=6.11.2&source=github-rel cf-cli_amd64.deb" && dpkg -i /root/cf-cli_amd64.deb && rm /root/cf-cli_amd64.deb
 
 EXPOSE 80 443 4443
-CMD ["/bin/bash -c /root/run.sh & /usr/bin/supervisord"]
+CMD /root/run.sh & /usr/bin/supervisord
