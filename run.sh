@@ -101,5 +101,3 @@ for ((i=0; i < 120; i++)); do
     echo "Waiting for all processes to start..."
     echo
 done
-
-/var/vcap/bosh/bin/monit -I
