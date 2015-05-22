@@ -10,15 +10,16 @@ Cloud Foundry aims to make development easy but can be complex to stand up a wor
 
 CF Mini makes it a 2-step process... Pull & Run with Docker.
 
-Pull:
+# pull:
 
-    docker pull tchughesiv/cf-mini
+    $ docker pull tchughesiv/cf-mini
 
-Run:
+# run:
 
     $ docker run --privileged -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
+    OR
+    $ docker run --privileged -tdi tchughesiv/cf-mini
 
-CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
 
 # requirements:
 
@@ -80,7 +81,7 @@ Macintosh DNS server setup:
     PING api.cf.mini (10.x.x.x): 56 data bytes
     64 bytes from 10.x.x.x: icmp_seq=0 ttl=64 time=6.240 ms
 
-# run:
+# connect:
 
 Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 4 minutes consistently.  Subsequent (existing) container runs will be much faster to start.
 
@@ -93,3 +94,5 @@ Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first 
 To connect via cli:
 
     $ cf login -a https://api.cf.mini -u admin -p c1oudc0w --skip-ssl-validation
+
+CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
