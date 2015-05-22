@@ -38,7 +38,7 @@ echo "[supervisord]
 nodaemon=true
 
 [program:monit]
-command=/var/vcap/bosh/bin/monit -I" > /etc/supervisor/conf.d/supervisord.conf
+command=/var/vcap/bosh/bin/monit" > /etc/supervisor/conf.d/supervisord.conf
 
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/a echo' ;
@@ -53,7 +53,7 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
-/var/vcap/bosh/bin/monit
+/usr/bin/supervisord
 sleep 2
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
