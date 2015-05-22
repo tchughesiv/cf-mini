@@ -4,7 +4,6 @@ while read -r a
 do 
   b="/tmp/warden/cgroup/$a" 
   mkdir -p "$b" 
-#  mount -tcgroup -o"$a" "cgroup:$a" "$b" 
 done
 
 mount -tcgroup -operf_event cgroup:perf_event /tmp/warden/cgroup/perf_event
@@ -35,15 +34,12 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4" > /etc/resolv.conf
 /etc/init.d/dnsmasq restart
 
-# iptables -t nat -F PREROUTING 2> /dev/null || true
-# iptables -t nat -F POSTROUTING 2> /dev/null || true
-# iptables -t nat -A PREROUTING -d 0.0.0.0/32 -j DNAT --to-destination $NISE_IP_ADDRESS
-# iptables -t nat -A POSTROUTING -s $NISE_IP_ADDRESS/32 -j SNAT --to-source 0.0.0.0
+echo "[supervisord]
+nodaemon=true
 
-# sed -i '/tcp_fin_timeout/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-# sed -i '/tcp_tw_recycle/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-# sed -i '/tcp_tw_reuse/d' /var/vcap/jobs/dea_next/bin/dea_ctl
-# sed -i '/net.ipv4.neigh.default.gc_thresh/d' /var/vcap/jobs/nats/bin/nats_ctl
+[program:monit]
+command=/var/vcap/bosh/bin/monit -I" > /etc/supervisor/conf.d/supervisord.conf
+
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/a echo' ;
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_reuse/a echo' ;
@@ -54,12 +50,8 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/d' ;
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_reuse/d' ;
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_thresh/d' ;
 
-#? rm -rf /var/vcap/store/etcd
-#? sed -i '/name=/d' /var/vcap/jobs/etcd/bin/etcd_ctl
-#? sed -i '/name=/d' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
-# sed -i 's/MODULES=most/MODULES=dep/g' /etc/initramfs-tools/initramfs.conf
 
 /var/vcap/bosh/bin/monit
 sleep 2
