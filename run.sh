@@ -79,6 +79,8 @@ for ((i=0; i < 120; i++)); do
         cf t -s dev
         cd /root/cf_nise_installer/test_apps/test_app/
         cf push
+        sleep 5
+        cf scale hello -i 2
         break
     fi
     sleep 10
