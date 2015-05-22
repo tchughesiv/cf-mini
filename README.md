@@ -22,7 +22,7 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 Tested on Ubuntu 15.04 Docker Server w/ following:
 
-  Instructions -
+  Notes on my build -
 
   <https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md>
 
