@@ -20,6 +20,8 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 # requirements:
 
+Tested on Ubuntu 15.04 Docker Server w/ following
+
   A Docker server running with "devicemapper" as its storage backend (with Udev sync = true) & at least 30gb disk highly recommended. I intend to do further testing with the btrfs and overlay storage options soon. My working Ubuntu environment has two critical things configured that you should verify or performance will suffer:
 
   Server process looks like this:
@@ -80,7 +82,7 @@ Macintosh DNS server setup:
 
 # connect:
 
-Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 4 minutes consistently.  Subsequent (existing) container runs should be a little faster.
+Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 4 minutes consistently.
 
   You'll know the stack is ready for use when you're able to access this ruby app:
 
