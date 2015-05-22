@@ -53,17 +53,17 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
-/usr/bin/supervisord
-sleep 2
+/usr/bin/supervisord &
+sleep 10
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 sleep 15
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
-sleep 15
+sleep 10
 echo "Starting etcd jobs..."
 /var/vcap/bosh/bin/monit start etcd
-sleep 15
+sleep 10
 # /var/vcap/bosh/bin/monit start etcd doppler metron_agent etcd_metrics_server loggregator_trafficcontroller
 # echo "Starting hm9000 jobs..."
 # /var/vcap/bosh/bin/monit start hm9000_api_server hm9000_metrics_server hm9000_listener uaa uaa_cf-registrar
