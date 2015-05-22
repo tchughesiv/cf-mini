@@ -59,7 +59,7 @@ PING api.cf.mini (192.168.59.103): 56 data bytes
 64 bytes from 192.168.59.103: icmp_seq=0 ttl=64 time=6.240 ms
 ```
 
-Cloud Foundry should take anywhere from 3 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 server with 4 procs it took about 4 minutes consistently.  Subsequent (existing) container runs will be much faster to start.
+Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 docker server with 4 procs it took about 4 minutes consistently.  Subsequent (existing) container runs will be much faster to start.
 
   You'll know the stack is ready for use when you're able to access this ruby app:
   http://hello.cf.mini/
