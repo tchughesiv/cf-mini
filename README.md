@@ -20,9 +20,9 @@ Run:
 
 CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
 
-IMPORTANT:
+# requirements:
 
-  A Docker server running with "devicemapper" as its storage backend (with Udev sync) & at least 30gb disk recommended. My working Ubuntu environment has two critical things configured that need checking:
+  A Docker server running with "devicemapper" as its storage backend (with Udev sync = true) & at least 30gb disk highly recommended. My working Ubuntu environment has two critical things configured that you should verify or performance will suffer:
 
   Server process looks like this:
 
@@ -33,32 +33,34 @@ IMPORTANT:
 
     $ docker info
     Storage Driver: devicemapper
-     Data Space Available: 29.23 GB
+     Data Space Available: 30 GB
      Udev Sync Supported: true
 
-  The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf.mini" domain.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
+  Your container might be able to start with the defaults, but won't last long... if it runs at all. At the very least, change to devicemapper w/o udev or base size changes (full storage might bite you fast though). I intend to put a document together for building a Docker server like stated above.  Check back soon if you need help.
+
+# dns:
+
+  The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf.mini" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
 
 Ubuntu DNS server setup:
 
     $ apt-get update && apt-get install dnsmasq
-    $ NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
-    $ echo "address=/cf.mini/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
-    $ umount /etc/resolv.conf
-    $ echo "nameserver 127.0.0.1
-    nameserver 8.8.8.8
-    nameserver 8.8.4.4" > /etc/resolv.conf
+    ## Docker Server IP in place of 10.x.x.x
+    $ echo -e '\naddress=/cf.mini/10.x.x.x' >> /etc/dnsmasq.conf
+    $ dpkg-reconfigure resolvconf # (YES to dynamic)
     $ /etc/init.d/dnsmasq restart
-
+    $ ping api.cf.mini
+    PING api.cf.mini (10.x.x.x) 56(84) bytes of data.
+    64 bytes from 10.x.x.x: icmp_seq=1 ttl=64 time=0.080 ms
 
 Macintosh DNS server setup:
 
     $ brew install dnsmasq
     $ cp $(brew list dnsmasq | grep /dnsmasq.conf.example$) /usr/local/etc/dnsmasq.conf
 
-    # Docker Server IP in place of 10.x.x.x
-    echo -e '\naddress=/cf.mini/10.x.x.x' >> /usr/local/etc/dnsmasq.conf
-
+    ## Docker Server IP in place of 10.x.x.x
+    $ echo -e '\naddress=/cf.mini/10.x.x.x' >> /usr/local/etc/dnsmasq.conf
     $ sudo cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons/
     $ sudo chown root /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
     $ sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
@@ -74,10 +76,11 @@ Macintosh DNS server setup:
 
     $ sudo launchctl stop homebrew.mxcl.dnsmasq
     $ sudo launchctl start homebrew.mxcl.dnsmasq
-
     $ ping api.cf.mini
-    PING api.cf.mini (192.168.59.103): 56 data bytes
-    64 bytes from 192.168.59.103: icmp_seq=0 ttl=64 time=6.240 ms
+    PING api.cf.mini (10.x.x.x): 56 data bytes
+    64 bytes from 10.x.x.x: icmp_seq=0 ttl=64 time=6.240 ms
+
+# run:
 
 Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 4 minutes consistently.  Subsequent (existing) container runs will be much faster to start.
 
