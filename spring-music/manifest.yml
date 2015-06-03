@@ -1,7 +1,7 @@
 ---
 applications:
 - name: spring-music
-  memory: 512M
+  memory: 768M
   instances: 1
   host: spring-music
   path: spring-music.war
