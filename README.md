@@ -35,7 +35,6 @@ Tested on Ubuntu 15.04 Docker Server w/ following:
 
     $ docker info
     Storage Driver: devicemapper
-     Data Space Available: 30 GB
      Udev Sync Supported: true
 
   Your container might be able to start with the defaults, but won't last long... if it runs at all. At the very least, change to devicemapper w/o udev or base size changes (full storage might bite you fast though).
