@@ -16,7 +16,7 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 # run:
 
-    $ docker run --privileged -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
+    $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 
 # requirements:
 
