@@ -15,7 +15,6 @@ ENV NISE_DOMAIN cf.mini
 ENV NISE_PASSWORD c1oudc0w
 
 ADD run.sh /root/
-RUN apt-get update && apt-get -yq install linux-image-extra-$(uname -r) linux-image-$(uname -r)
 RUN mkdir /root/cf_nise_installer/test_apps && mkdir /root/cf_nise_installer/test_apps/spring-music && mkdir /root/cf_nise_installer/test_apps/cf-env && mv /root/cf_nise_installer/test_app /root/cf_nise_installer/test_apps/ && rm -f /etc/supervisor/conf.d/supervisord.conf
 ADD cf-env /root/cf_nise_installer/test_apps/cf-env/
 ADD spring-music /root/cf_nise_installer/test_apps/spring-music/
