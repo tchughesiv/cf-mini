@@ -11,7 +11,7 @@ ENV LC_ALL en_US.UTF-8
 
 ENV HOME /root
 ENV INSTALLER_BRANCH v205
-ENV NISE_DOMAIN cf.mini
+ENV NISE_DOMAIN cf-mini.example
 ENV NISE_PASSWORD c1oudc0w
 
 ADD run.sh /root/
