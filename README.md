@@ -52,7 +52,7 @@ Ubuntu DNS server setup:
     $ dpkg-reconfigure resolvconf # (YES to dynamic)
     $ /etc/init.d/dnsmasq restart
     $ ping api.cf-mini.example
-    PING api.cf.example (10.x.x.x) 56(84) bytes of data.
+    PING api.cf-mini.example (10.x.x.x) 56(84) bytes of data.
     64 bytes from 10.x.x.x: icmp_seq=1 ttl=64 time=0.080 ms
 
 Macintosh DNS server setup:
