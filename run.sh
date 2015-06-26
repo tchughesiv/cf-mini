@@ -47,6 +47,9 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
+mkdir -p /mnt/pg_stats_tmp
+mount -t tmpfs -o size=1G none /mnt/pg_stats_tmp
+
 sleep 10
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
