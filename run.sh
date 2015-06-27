@@ -47,13 +47,17 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
-mkdir -p /mnt/pg_stats_tmp
-mount -t tmpfs -o size=1G none /mnt/pg_stats_tmp
-
 sleep 10
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 sleep 15
+
+echo "checkpoint_completion_target = 0.7
+checkpoint_timeout = 10min
+checkpoint_segments = 20
+log_checkpoints = on" >> /var/vcap/store/postgres/postgresql.conf
+su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
+
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
 sleep 10
@@ -67,6 +71,7 @@ sleep 10
 # echo "Starting gorouter & controller jobs..."
 # /var/vcap/bosh/bin/monit start gorouter haproxy cloud_controller_ng nginx_cc cloud_controller_worker_local_1 cloud_controller_clock cloud_controller_worker_1 cloud_controller_worker_local_2
 # sleep 10
+
 echo "Starting remaining jobs..."
 /var/vcap/bosh/bin/monit start all
 # watch -n 3 '/var/vcap/bosh/bin/monit summary'
