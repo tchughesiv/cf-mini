@@ -1,9 +1,11 @@
 #! /bin/bash
-awk 'NR>1 {print $1}' /proc/cgroups | 
-while read -r a 
-do 
-  b="/tmp/warden/cgroup/$a" 
-  mkdir -p "$b" 
+echo Etc/UTC > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
+
+awk 'NR>1 {print $1}' /proc/cgroups |
+while read -r a
+do
+  b="/tmp/warden/cgroup/$a"
+  mkdir -p "$b"
 done
 
 mount -tcgroup -operf_event cgroup:perf_event /tmp/warden/cgroup/perf_event
@@ -47,16 +49,36 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
+if mount | grep /mnt/pg_stat_tmp > /dev/null; then
+    echo ""
+else
+    mkdir -p /mnt/pg_stat_tmp
+    mount -t tmpfs -o size=1G none /mnt/pg_stat_tmp
+fi
+
+chown -R vcap:vcap /mnt/pg_stat_tmp
+
+sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/config/postgresql.conf
+sed -i 's/shared_buffers = 128MB/shared_buffers = 512MB/g' /var/vcap/jobs/postgres/config/postgresql.conf
+
+sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/bin/postgres_ctl
+sed -i '/kernel.shmmax/d' /var/vcap/jobs/postgres/bin/postgres_ctl
+
+echo "log_connections = on
+log_checkpoints = on
+log_min_messages = NOTICE
+wal_buffers = 16MB
+checkpoint_completion_target = 0.7
+checkpoint_timeout = 10min
+checkpoint_segments = 20
+stats_temp_directory = '/mnt/pg_stat_tmp'" >> /var/vcap/jobs/postgres/config/postgresql.conf
+
 sleep 10
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 sleep 15
 
-echo "checkpoint_completion_target = 0.7
-checkpoint_timeout = 10min
-checkpoint_segments = 20
-log_checkpoints = on" >> /var/vcap/store/postgres/postgresql.conf
-su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
+# su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
 
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
@@ -64,24 +86,15 @@ sleep 10
 echo "Starting etcd jobs..."
 /var/vcap/bosh/bin/monit start etcd
 sleep 10
-# /var/vcap/bosh/bin/monit start etcd doppler metron_agent etcd_metrics_server loggregator_trafficcontroller
-# echo "Starting hm9000 jobs..."
-# /var/vcap/bosh/bin/monit start hm9000_api_server hm9000_metrics_server hm9000_listener uaa uaa_cf-registrar
-# sleep 10
-# echo "Starting gorouter & controller jobs..."
-# /var/vcap/bosh/bin/monit start gorouter haproxy cloud_controller_ng nginx_cc cloud_controller_worker_local_1 cloud_controller_clock cloud_controller_worker_1 cloud_controller_worker_local_2
-# sleep 10
 
 echo "Starting remaining jobs..."
 /var/vcap/bosh/bin/monit start all
-# watch -n 3 '/var/vcap/bosh/bin/monit summary'
 
 echo
 echo "Waiting for all processes to start..."
 echo
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
-        # CF_TRACE=true cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
         cf create-space dev
         cf t -s dev
