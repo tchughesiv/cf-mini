@@ -49,10 +49,10 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
-sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/config/postgresql.conf
-sed -i 's/shared_buffers = 128MB/shared_buffers = 256MB/g' /var/vcap/jobs/postgres/config/postgresql.conf
+# sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/config/postgresql.conf
+# sed -i 's/shared_buffers = 128MB/shared_buffers = 256MB/g' /var/vcap/jobs/postgres/config/postgresql.conf
 
-sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/bin/postgres_ctl
+# sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/bin/postgres_ctl
 sed -i '/kernel.shmmax/d' /var/vcap/jobs/postgres/bin/postgres_ctl
 
 # echo "log_min_messages = ERROR
