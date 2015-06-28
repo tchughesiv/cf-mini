@@ -55,18 +55,18 @@ sed -i 's/shared_buffers = 128MB/shared_buffers = 256MB/g' /var/vcap/jobs/postgr
 sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/bin/postgres_ctl
 sed -i '/kernel.shmmax/d' /var/vcap/jobs/postgres/bin/postgres_ctl
 
-echo "log_min_messages = ERROR
-wal_buffers = 8MB
-checkpoint_completion_target = 0.7
-checkpoint_timeout = 10min
-checkpoint_segments = 20" >> /var/vcap/jobs/postgres/config/postgresql.conf
+# echo "log_min_messages = ERROR
+# wal_buffers = 8MB
+# checkpoint_completion_target = 0.7
+# checkpoint_timeout = 10min
+# checkpoint_segments = 20" >> /var/vcap/jobs/postgres/config/postgresql.conf
 
 sleep 10
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 sleep 15
 
-#su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
+# su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
 
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
