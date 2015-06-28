@@ -49,36 +49,24 @@ find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/net.ipv4.neigh.default.gc_th
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/bin/etcd_ctl
 sed -i 's/peer-heartbeat-timeout/peer-heartbeat-interval/g' /var/vcap/jobs/etcd/templates/etcd_ctl.erb
 
-if mount | grep /mnt/pg_stat_tmp > /dev/null; then
-    echo ""
-else
-    mkdir -p /mnt/pg_stat_tmp
-    mount -t tmpfs -o size=1G none /mnt/pg_stat_tmp
-fi
-
-chown -R vcap:vcap /mnt/pg_stat_tmp
-
 sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/config/postgresql.conf
-sed -i 's/shared_buffers = 128MB/shared_buffers = 512MB/g' /var/vcap/jobs/postgres/config/postgresql.conf
+sed -i 's/shared_buffers = 128MB/shared_buffers = 256MB/g' /var/vcap/jobs/postgres/config/postgresql.conf
 
 sed -i 's/0.0.0.0/*/g' /var/vcap/jobs/postgres/bin/postgres_ctl
 sed -i '/kernel.shmmax/d' /var/vcap/jobs/postgres/bin/postgres_ctl
 
-echo "log_connections = on
-log_checkpoints = on
-log_min_messages = NOTICE
-wal_buffers = 16MB
+echo "log_min_messages = ERROR
+wal_buffers = 8MB
 checkpoint_completion_target = 0.7
 checkpoint_timeout = 10min
-checkpoint_segments = 20
-stats_temp_directory = '/mnt/pg_stat_tmp'" >> /var/vcap/jobs/postgres/config/postgresql.conf
+checkpoint_segments = 20" >> /var/vcap/jobs/postgres/config/postgresql.conf
 
 sleep 10
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 sleep 15
 
-# su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
+#su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
 
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
