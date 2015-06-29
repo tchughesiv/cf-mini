@@ -14,9 +14,10 @@ ENV INSTALLER_BRANCH v205
 ENV NISE_DOMAIN cf-mini.example
 ENV NISE_PASSWORD c1oudc0w
 
-RUN mkdir /root/cf_nise_installer/test_apps && mkdir /root/cf_nise_installer/test_apps/spring-music && mkdir /root/cf_nise_installer/test_apps/cf-env && mv /root/cf_nise_installer/test_app /root/cf_nise_installer/test_apps/ && rm -f /etc/supervisor/conf.d/supervisord.conf
+RUN mkdir /root/cf_nise_installer/test_apps && mkdir /root/cf_nise_installer/test_apps/spring-music && mkdir /root/cf_nise_installer/test_apps/cf-env && mkdir /root/cf_nise_installer/test_apps/test_app && rm -rf /root/cf_nise_installer/test_app && rm -f /etc/supervisor/conf.d/supervisord.conf
 ADD cf-env /root/cf_nise_installer/test_apps/cf-env/
 ADD spring-music /root/cf_nise_installer/test_apps/spring-music/
+ADD test_app /root/cf_nise_installer/test_apps/test_app/
 ADD supervisord.conf /etc/supervisor/conf.d/
 ADD run.sh /root/
 ADD run_first.sh /root/
