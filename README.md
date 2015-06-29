@@ -14,7 +14,7 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
   
-  *Installation instructions on my tested Ubuntu 15.04 server build are [here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
+  *[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
 
   1.) Server process should look like this:
 
