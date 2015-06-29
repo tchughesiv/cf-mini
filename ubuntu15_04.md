@@ -1,6 +1,6 @@
 # Ubuntu & Docker w/ devicemapper 15.04 install notes
 
-start with 14.04 server and do the following:
+*IF starting with Ubuntu 14.04 (Trusty Tahr), start here and continue through the end:*
 
 ```shell
 # upgrade to Ubuntu 15.04 (Vivid Vervet)
@@ -9,7 +9,11 @@ $ vi /etc/update-manager/release-upgrades
 Prompt=normal
 
 $ do-release-upgrade (may have to do this more than once to get to 15.04)
+```
 
+*IF starting with Ubuntu 15.04 (Vivid Vervet), start here:*
+
+```shell
 $ apt-get update && apt-get -y install libdevmapper* libudev* udev aufs-tools libdevmapper-event* libudev-dev libdevmapper-dev golang make gcc btrfs-tools libsqlite3-dev overlayroot debootstrap
 $ dpkg -l | grep -E '(mapper|udev)'
 ii  libdevmapper-dev:amd64              2:1.02.90-2ubuntu1           amd64        Linux Kernel Device Mapper header files
