@@ -10,14 +10,6 @@ Cloud Foundry aims to simplify code deployments... once you have a working PaaS 
 
 CF Mini makes it a 2-step process... Pull & Run with Docker.
 
-# pull:
-
-    $ docker pull tchughesiv/cf-mini
-
-# run:
-
-    $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
-
 # requirements:
 
 Tested on Ubuntu 15.04 Docker Server w/ following:
@@ -38,6 +30,14 @@ Tested on Ubuntu 15.04 Docker Server w/ following:
      Udev Sync Supported: true
 
   Your container might be able to start with the defaults, but won't last long... if it runs at all. At the very least, change to devicemapper w/o udev or base size changes (full storage might bite you fast though).
+
+# pull:
+
+    $ docker pull tchughesiv/cf-mini
+
+# run:
+
+    $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 
 # dns:
 
