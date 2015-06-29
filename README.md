@@ -12,22 +12,22 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 # requirements:
 
-A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. My working Ubuntu environment has two critical things configured that you should verify or performance will suffer.
+A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
   
-  Tested on a Ubuntu 15.04 server w/ the following settings: <i>(Notes on my build are [here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).)</i>
+  <i>Installation instructions on my tested Ubuntu 15.04 server build are [here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).</i>
 
-  Server process looks like this:
+  1.) Server process should look like this:
 
     $ ps -ef |grep -i docker
     docker -d -s devicemapper --storage-opt dm.basesize=30G
 
-  Docker info returns these critical components:
+  2.) Docker info should return these critical components:
 
     $ docker info
     Storage Driver: devicemapper
      Udev Sync Supported: true
 
-  Your container might be able to start with the defaults, but won't last long... if it runs at all. At the very least, change to devicemapper w/o udev or base size changes (full storage might bite you fast though).
+  Your container might be able to start with the devicemapper defaults, but won't last long.
 
 # pull:
 
