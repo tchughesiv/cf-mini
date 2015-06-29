@@ -81,7 +81,7 @@ Macintosh DNS server setup:
 
 # connect:
 
-Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 4 minutes consistently.
+Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 5 minutes consistently.
 
   You'll know the stack is ready for use when you're able to access this ruby app:
 
