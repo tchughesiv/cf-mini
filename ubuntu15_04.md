@@ -1,6 +1,6 @@
 # Ubuntu & Docker w/ devicemapper 15.04 install notes
 
-*IF starting with Ubuntu 14.04 (Trusty Tahr), start here and continue through the end:*
+_IF starting with **Ubuntu 14.04 (Trusty Tahr)**, start here and continue through the end:_
 
 ```shell
 # upgrade to Ubuntu 15.04 (Vivid Vervet)
@@ -11,7 +11,7 @@ Prompt=normal
 $ do-release-upgrade (may have to do this more than once to get to 15.04)
 ```
 
-*IF starting with Ubuntu 15.04 (Vivid Vervet), start here:*
+_IF starting with **Ubuntu 15.04 (Vivid Vervet)**, start here:_
 
 ```shell
 $ apt-get update && apt-get -y install libdevmapper* libudev* udev aufs-tools libdevmapper-event* libudev-dev libdevmapper-dev golang make gcc btrfs-tools libsqlite3-dev overlayroot debootstrap
