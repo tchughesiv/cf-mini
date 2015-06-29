@@ -30,10 +30,16 @@ NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
+if [ ! -f /etc/resolv.old ]; then
+cp -p /etc/resolv.conf /etc/resolv.old
+grep -i nameserver /etc/resolv.old > /etc/resolv.dnsmasq.conf
 umount /etc/resolv.conf
-echo "nameserver 127.0.0.1
-nameserver 8.8.8.8
-nameserver 8.8.4.4" > /etc/resolv.conf
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
+echo "nameserver 8.8.8.8
+nameserver 8.8.4.4" >> /etc/resolv.dnsmasq.conf
+echo "resolv-file=/etc/resolv.dnsmasq.conf" >> /etc/dnsmasq.conf
+fi
+
 /etc/init.d/dnsmasq restart
 
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
