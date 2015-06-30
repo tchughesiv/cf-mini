@@ -42,6 +42,7 @@ $ DOCKER_BUILDTAGS=btrfs_noversion AUTO_GOPATH=1 ./hack/make.sh dynbinary
 $ service docker stop
 $ cp -p bundles/1.6.2/dynbinary/dockerinit-1.6.2 /var/lib/docker/init;cp -p bundles/1.6.2/dynbinary/docker-1.6.2 /usr/bin/docker
 
+# next docker version will fix auto startup (systemctl integration) and DOCKER_OPTS ability for 15.04... for now though, we'll run docker manually for this test.
 $ docker -d -s devicemapper --storage-opt dm.basesize=30G &
 
 $ docker info
