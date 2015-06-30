@@ -39,6 +39,7 @@ echo "resolv-file=/etc/resolv.dnsmasq.conf" >> /etc/dnsmasq.conf
 
 umount /etc/resolv.conf
 echo "nameserver 127.0.0.1" > /etc/resolv.conf
+grep -i nameserver /etc/resolv.dnsmasq.conf | head -n 2 >> /etc/resolv.conf
 /etc/init.d/dnsmasq restart
 
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
