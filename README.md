@@ -96,4 +96,4 @@ To connect via cli:
 
 CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
 
-![gif not loading](https://raw.githubusercontent.com/tchughesiv/CosgKBs/master/cfmini.gif "CF-Mini Demo")
+![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")
