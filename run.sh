@@ -8,7 +8,7 @@ echo
 echo "Waiting for postgres to start..."
 echo
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i postgres | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i postgres | grep -v -E "(running|accessible)$"); then
         break
     fi
     sleep 10
@@ -26,7 +26,7 @@ echo
 echo "Waiting for nats to start..."
 echo
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i nats | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i nats | grep -v -E "(running|accessible)$"); then
         break
     fi
     sleep 10
@@ -42,7 +42,7 @@ echo
 echo "Waiting for remaining processes to start..."
 echo
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "(running|accessible)$"); then
         cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
         cf create-space dev
         cf t -s dev

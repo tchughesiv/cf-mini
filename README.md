@@ -3,8 +3,8 @@ Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
 [![](https://badge.imagelayers.io/tchughesiv/cf-mini.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
 
-    Ubuntu Precise 12.04.05
-    Cloud Foundry v205
+    Ubuntu Trusty 14.04
+    Cloud Foundry v215
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
@@ -12,22 +12,21 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 # requirements:
 
-A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
+A Docker server using "overlay" storage & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
   
   *[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
 
   1.) Server process should look like this:
 
     $ ps -ef |grep -i docker
-    docker -d -s devicemapper --storage-opt dm.basesize=30G
+    /usr/bin/docker daemon -H fd:// -s overlay
 
-  2.) Docker info should return these critical components:
+  2.) Docker info should return this critical component:
 
     $ docker info
-    Storage Driver: devicemapper
-     Udev Sync Supported: true
+    Storage Driver: overlay
 
-  Your container might be able to start with the devicemapper defaults, but won't last long.
+  Your container might be able to start with the defaults, but won't last long.
 
 # pull:
 
