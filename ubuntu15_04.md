@@ -34,8 +34,6 @@ GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
 $ update-grub
 $ reboot now
 
-$ systemctl stop docker
-$ cd ~
 $ vi /lib/systemd/system/docker.service
 [Service]
 Type=notify
@@ -46,7 +44,7 @@ $ vi /etc/default/docker
 DOCKER_OPTS="-s devicemapper --storage-opt dm.basesize=30G"
 
 $ systemctl daemon-reload
-$ systemctl start docker
+$ systemctl restart docker
 $ docker info
 Storage Driver: devicemapper
  Udev Sync Supported: true
