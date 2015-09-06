@@ -28,12 +28,6 @@ $ echo deb http://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/do
 $ apt-key adv --keyserver pgp.mit.edu --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 $ apt-get update
 $ apt-get install -y docker-engine
-$ vi /etc/default/grub
-GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
-
-$ update-grub
-$ reboot now
-
 $ vi /lib/systemd/system/docker.service
 [Service]
 Type=notify
@@ -43,8 +37,12 @@ ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
 $ vi /etc/default/docker
 DOCKER_OPTS="-s devicemapper --storage-opt dm.basesize=30G"
 
-$ systemctl daemon-reload
-$ systemctl restart docker
+$ vi /etc/default/grub
+GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
+
+$ update-grub
+$ reboot now
+
 $ docker info
 Storage Driver: devicemapper
  Udev Sync Supported: true
