@@ -11,23 +11,25 @@ Cloud Foundry aims to simplify code deployments... once you have a working PaaS 
 CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 # requirements:
+# requirements:
 
-A Docker server using "overlay" storage & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
+A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
   
   *[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
 
   1.) Server process should look like this:
 
     $ ps -ef |grep -i docker
-    /usr/bin/docker daemon -H fd:// -s overlay
+    docker daemon -H fd:// -s devicemapper --storage-opt dm.basesize=30G
 
-  2.) Docker info should return this critical component:
+  2.) Docker info should return these critical components:
 
     $ docker info
-    Storage Driver: overlay
+    Storage Driver: devicemapper
+     Udev Sync Supported: true
 
-  Your container might be able to start with the defaults, but won't last long.
-
+  Your container might be able to start with the devicemapper defaults, but won't last long.
+  
 # pull:
 
     $ docker pull tchughesiv/cf-mini
