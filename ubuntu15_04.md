@@ -23,7 +23,7 @@ ii  libudev-dev:amd64                   219-7ubuntu5                 amd64      
 ii  libudev1:amd64                      219-7ubuntu5                 amd64        libudev shared library
 ii  udev                                219-7ubuntu5                 amd64        /dev/ and hotplug management daemon
 
-# TESTED WITH DOCKER 1.8.1 SO ITS WHAT I RECOMMEND FOR NOW
+# TESTED WITH DOCKER-ENGINE 1.8.1 SO ITS WHAT I RECOMMEND FOR NOW
 $ echo deb http://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 $ apt-key adv --keyserver pgp.mit.edu --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 $ apt-get update
