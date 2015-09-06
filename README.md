@@ -11,7 +11,6 @@ Cloud Foundry aims to simplify code deployments... once you have a working PaaS 
 CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 # requirements:
-# requirements:
 
 A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
   
@@ -29,7 +28,7 @@ A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk i
      Udev Sync Supported: true
 
   Your container might be able to start with the devicemapper defaults, but won't last long.
-  
+
 # pull:
 
     $ docker pull tchughesiv/cf-mini
