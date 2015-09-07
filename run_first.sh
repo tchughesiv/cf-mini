@@ -28,7 +28,9 @@ cd /root/cf_nise_installer/
 rsyslogd
 NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
+sed -i "/cf.internal/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
+echo "address=/cf.internal/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
 cp -p /etc/resolv.conf /etc/resolv.old
 grep -i nameserver /etc/resolv.old > /etc/resolv.dnsmasq.conf

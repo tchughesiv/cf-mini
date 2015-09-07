@@ -11,7 +11,7 @@ ENV LC_ALL en_US.UTF-8
 
 ENV HOME /root
 ENV INSTALLER_BRANCH v215
-ENV NISE_DOMAIN cf.internal
+ENV NISE_DOMAIN cf-mini.example
 ENV NISE_PASSWORD c1oudc0w
 
 RUN mkdir /root/cf_nise_installer/test_apps && mkdir /root/cf_nise_installer/test_apps/spring-music && mkdir /root/cf_nise_installer/test_apps/cf-env && mkdir /root/cf_nise_installer/test_apps/test_app && rm -rf /root/cf_nise_installer/test_app && rm -f /etc/supervisor/conf.d/supervisord.conf
