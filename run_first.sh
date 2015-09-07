@@ -123,6 +123,7 @@ for ((i=0; i < 120; i++)); do
     echo
 done
 
+sleep 30
 /var/vcap/bosh/bin/monit quit
 /var/vcap/bosh/bin/monit stop all
 /var/vcap/bosh/bin/monit stop all
