@@ -29,4 +29,4 @@ RUN find . -type f -name "Gemfile*" | xargs sed -i '/pg/ s/0.16.0/0.17.1/g' && f
 
 WORKDIR /root/cf_nise_installer/test_apps
 EXPOSE 80 443 4443
-CMD /root/run_first.sh ; /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf & /root/run.sh
+CMD /root/run_first.sh ; /root/run.sh & /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
