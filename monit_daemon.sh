@@ -19,4 +19,5 @@ sleep 2
 while [ -f $pidfile ] && kill -0 $(cat $pidfile) ; do
     sleep 0.5
 done
+
 exit 1000 # exit unexpected
