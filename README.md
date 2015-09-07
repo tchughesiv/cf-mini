@@ -3,8 +3,8 @@ Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
 [![](https://badge.imagelayers.io/tchughesiv/cf-mini.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
 
-    Ubuntu Precise 12.04.05
-    Cloud Foundry v205
+    Ubuntu Trusty 14.04
+    Cloud Foundry v215
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
@@ -19,7 +19,7 @@ A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk i
   1.) Server process should look like this:
 
     $ ps -ef |grep -i docker
-    docker -d -s devicemapper --storage-opt dm.basesize=30G
+    docker daemon -H fd:// -s devicemapper --storage-opt dm.basesize=30G
 
   2.) Docker info should return these critical components:
 
@@ -87,11 +87,13 @@ Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first 
 
   <http://hello.cf-mini.example/>
 
-    $ curl http://hello.cf-mini.example
+    $ curl hello.cf-mini.example
     Hello, World!
 
 To connect via cli:
 
     $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 
-CLI version 6.11.2 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.11.2>
+CLI version 6.12.3 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.12.3>
+
+![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")

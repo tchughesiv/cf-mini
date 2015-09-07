@@ -28,7 +28,9 @@ cd /root/cf_nise_installer/
 rsyslogd
 NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d ' ' | cut -f1 -d '/' | head -n 1`}
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
+sed -i "/cf.internal/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
+echo "address=/cf.internal/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
 cp -p /etc/resolv.conf /etc/resolv.old
 grep -i nameserver /etc/resolv.old > /etc/resolv.dnsmasq.conf
@@ -70,7 +72,7 @@ sed -i '/kernel.shmmax/d' /var/vcap/jobs/postgres/bin/postgres_ctl
 /var/vcap/bosh/bin/monit quit
 /var/vcap/bosh/bin/monit
 
-sleep 10
+sleep 5
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 
@@ -78,16 +80,14 @@ echo
 echo "Waiting for postgres to start..."
 echo
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i postgres | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i postgres | grep -v -E "(running|accessible)$"); then
         break
     fi
-    sleep 10
+    sleep 5
     echo
     echo "Waiting for postgres to start..."
     echo
 done
-
-# su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
 
 echo "Starting nats job..."
 /var/vcap/bosh/bin/monit start nats
@@ -96,10 +96,10 @@ echo
 echo "Waiting for nats to start..."
 echo
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i nats | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i nats | grep -v -E "(running|accessible)$"); then
         break
     fi
-    sleep 10
+    sleep 5
     echo
     echo "Waiting for nats to start..."
     echo
@@ -112,10 +112,10 @@ echo
 echo "Waiting for remaining processes to start..."
 echo
 for ((i=0; i < 120; i++)); do
-    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "running$"); then
+    if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "(running|accessible)$"); then
         break
     fi
-    sleep 10
+    sleep 5
     echo
     echo "Waiting for remaining processes to start..."
     echo
