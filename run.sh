@@ -20,7 +20,7 @@ done
 # su - vcap -c "/var/vcap/data/packages/postgres/*/bin/pg_ctl reload -D /var/vcap/store/postgres"
 
 echo "Starting nats job..."
-/var/vcap/bosh/bin/monit start nats
+/var/vcap/bosh/bin/monit start nats gorouter cloud_controller_ng
 
 echo
 echo "Waiting for nats to start..."
