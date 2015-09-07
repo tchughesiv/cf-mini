@@ -83,7 +83,7 @@ for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i postgres | grep -v -E "(running|accessible)$"); then
         break
     fi
-    sleep 10
+    sleep 3
     echo
     echo "Waiting for postgres to start..."
     echo
@@ -101,7 +101,7 @@ for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -i nats | grep -v -E "(running|accessible)$"); then
         break
     fi
-    sleep 10
+    sleep 3
     echo
     echo "Waiting for nats to start..."
     echo
@@ -123,13 +123,12 @@ for ((i=0; i < 120; i++)); do
         echo
         break
     fi
-    sleep 10
+    sleep 3
     echo
     echo "Waiting for remaining processes to start..."
     echo
 done
 
-sleep 20
 /var/vcap/bosh/bin/monit quit
 /var/vcap/bosh/bin/monit stop all
 /var/vcap/bosh/bin/monit stop all
