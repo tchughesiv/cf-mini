@@ -1,5 +1,4 @@
 #! /bin/bash
-/var/vcap/bosh/bin/monit
 
 sleep 3
 echo "Starting postres job..."
