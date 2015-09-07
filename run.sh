@@ -1,6 +1,7 @@
 #! /bin/bash
+/var/vcap/bosh/bin/monit
 
-sleep 5
+sleep 3
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 
