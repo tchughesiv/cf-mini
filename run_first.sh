@@ -115,6 +115,12 @@ echo "Waiting for remaining processes to start..."
 echo
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "(running|accessible)$"); then
+        cf login -a https://api.$NISE_DOMAIN -u admin -p $NISE_PASSWORD --skip-ssl-validation
+        cf create-space dev
+        cf t -s dev
+        cd /root/cf_nise_installer/test_apps/test_app/
+        cf push
+        echo
         break
     fi
     sleep 10
@@ -123,7 +129,7 @@ for ((i=0; i < 120; i++)); do
     echo
 done
 
-sleep 30
+sleep 20
 /var/vcap/bosh/bin/monit quit
 /var/vcap/bosh/bin/monit stop all
 /var/vcap/bosh/bin/monit stop all
