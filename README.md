@@ -17,32 +17,36 @@ A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk i
 *[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
 
 1.) Server process should look like this:
-```
+```sh
 $ ps -ef |grep -i docker
 docker daemon -H fd:// -s devicemapper --storage-opt dm.basesize=30G
 ```
+
 2.) Docker info should return these critical components:
-```
+```sh
 $ docker info
 Storage Driver: devicemapper
 Udev Sync Supported: true
 ```
+
 Your container might be able to start with the devicemapper defaults, but won't last long.
 
 # pull:
-```
+```sh
 $ docker pull tchughesiv/cf-mini
 ```
+
 # run:
-```
+```sh
 $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 ```
+
 # dns:
 
 The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
 
 Ubuntu DNS server setup:
-```
+```sh
 $ apt-get update && apt-get install dnsmasq
 
 ## Docker Server IP in place of 10.x.x.x
@@ -53,8 +57,9 @@ $ ping api.cf-mini.example
 PING api.cf-mini.example (10.x.x.x) 56(84) bytes of data.
 64 bytes from 10.x.x.x: icmp_seq=1 ttl=64 time=0.080 ms
 ```
+
 Macintosh DNS server setup:
-```
+```sh
 $ brew install dnsmasq
 $ cp $(brew list dnsmasq | grep /dnsmasq.conf.example$) /usr/local/etc/dnsmasq.conf
 
@@ -79,6 +84,7 @@ $ ping api.cf-mini.example
 PING api.cf-mini.example (10.x.x.x): 56 data bytes
 64 bytes from 10.x.x.x: icmp_seq=0 ttl=64 time=6.240 ms
 ```
+
 # connect:
 
 Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 5 minutes consistently.
@@ -86,14 +92,16 @@ Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first 
 You'll know the stack is ready for use when you're able to access this ruby app:
 
 <http://hello.cf-mini.example/>
-```
+```sh
 $ curl hello.cf-mini.example
 Hello, World!
 ```
+
 To connect via cli:
-```
+```sh
 $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 ```
+
 CLI version 6.12.3 works well with the stack:
 
 <https://github.com/cloudfoundry/cli/releases/tag/v6.12.3>
