@@ -84,6 +84,7 @@ PING api.cf-mini.example (10.x.x.x): 56 data bytes
 Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 5 minutes consistently.
 
 You'll know the stack is ready for use when you're able to access this ruby app:
+
 <http://hello.cf-mini.example/>
 ```
 $ curl hello.cf-mini.example
@@ -94,6 +95,7 @@ To connect via cli:
 $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 ```
 CLI version 6.12.3 works well with the stack:
+
 <https://github.com/cloudfoundry/cli/releases/tag/v6.12.3>
 
 ![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")
