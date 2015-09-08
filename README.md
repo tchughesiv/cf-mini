@@ -13,21 +13,21 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 # requirements:
 
 A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
-  
-  *[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
 
-  1.) Server process should look like this:
+*[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
+
+1.) Server process should look like this:
 ```
 $ ps -ef |grep -i docker
 docker daemon -H fd:// -s devicemapper --storage-opt dm.basesize=30G
 ```
-  2.) Docker info should return these critical components:
+2.) Docker info should return these critical components:
 ```
 $ docker info
 Storage Driver: devicemapper
 Udev Sync Supported: true
 ```
-  Your container might be able to start with the devicemapper defaults, but won't last long.
+Your container might be able to start with the devicemapper defaults, but won't last long.
 
 # pull:
 ```
@@ -39,7 +39,7 @@ $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p
 ```
 # dns:
 
-  The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
+The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
 
 Ubuntu DNS server setup:
 ```
@@ -83,9 +83,8 @@ PING api.cf-mini.example (10.x.x.x): 56 data bytes
 
 Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 5 minutes consistently.
 
-  You'll know the stack is ready for use when you're able to access this ruby app:
-
-  <http://hello.cf-mini.example/>
+You'll know the stack is ready for use when you're able to access this ruby app:
+<http://hello.cf-mini.example/>
 ```
 $ curl hello.cf-mini.example
 Hello, World!
