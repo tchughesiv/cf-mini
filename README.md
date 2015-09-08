@@ -93,6 +93,7 @@ To connect via cli:
 ```
 $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 ```
-CLI version 6.12.3 works well with the stack:	<https://github.com/cloudfoundry/cli/releases/tag/v6.12.3>
+CLI version 6.12.3 works well with the stack:
+<https://github.com/cloudfoundry/cli/releases/tag/v6.12.3>
 
 ![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")
