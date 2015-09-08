@@ -1,10 +1,10 @@
 # CF Mini
 Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
-[![](https://badge.imagelayers.io/tchughesiv/cf-mini.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/tchughesiv/cf-mini:v215.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:v215 'Get your own badge on imagelayers.io')
 
-    Ubuntu Trusty 14.04
-    Cloud Foundry v215
+ - Ubuntu Trusty 14.04
+ - Cloud Foundry v215
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
