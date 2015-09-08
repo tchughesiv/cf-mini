@@ -91,7 +91,7 @@ Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first 
 
 You'll know the stack is ready for use when you're able to access this ruby app:
 
-<http://hello.cf-mini.example/>
+http://hello.cf-mini.example/
 ```sh
 $ curl hello.cf-mini.example
 Hello, World!
