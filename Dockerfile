@@ -1,6 +1,6 @@
 # Cloud Foundry running stack
 # version 0.3
-FROM tchughesiv/cf-mini-release:v215
+FROM tchughesiv/cf-mini-release:development
 MAINTAINER Tommy Hughes <tchughesiv@gmail.com>
 
 RUN locale-gen en_US.UTF-8  
