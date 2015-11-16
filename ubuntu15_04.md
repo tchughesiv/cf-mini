@@ -14,7 +14,7 @@ $ do-release-upgrade (may have to do this more than once to get to 15.04)
 _IF starting with **Ubuntu 15.04 (Vivid Vervet)**, start here:_
 
 ```shell
-$ apt-get update && apt-get -y install libdevmapper* libudev* udev aufs-tools libdevmapper-event* libudev-dev libdevmapper-dev golang make gcc btrfs-tools libsqlite3-dev overlayroot debootstrap linux-image-generic curl
+$ apt-get update && apt-get -y install libdevmapper* libudev* udev aufs-tools libdevmapper-event* libudev-dev libdevmapper-dev golang make gcc btrfs-tools libsqlite3-dev overlayroot debootstrap linux-image-generic curl && apt-get upgrade
 $ dpkg -l | grep -E '(mapper|udev)'
 ii  libdevmapper-dev:amd64              2:1.02.90-2ubuntu1           amd64        Linux Kernel Device Mapper header files
 ii  libdevmapper-event1.02.1:amd64      2:1.02.90-2ubuntu1           amd64        Linux Kernel Device Mapper event support library
