@@ -45,7 +45,7 @@ ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
 
 _Choose DEFAULT or RECOMMENDED (segmented data volume) path for devicemapper setup._
 
-### DEFAULT ###
+##### DEFAULT #####
 ```shell
 $ vi /etc/default/docker
 DOCKER_OPTS="-s devicemapper --storage-opt dm.basesize=30G"
@@ -53,9 +53,9 @@ DOCKER_OPTS="-s devicemapper --storage-opt dm.basesize=30G"
 $ systemctl daemon-reload
 ```
 
-_OR_
+_**OR**_
 
-### RECOMMENDED ###
+##### RECOMMENDED #####
 ```shell
 # add 50GB or more of raw disk to your server
 $ apt-get -y install lvm2
