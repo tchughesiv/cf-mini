@@ -16,10 +16,17 @@ A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk i
 
 *[Installation instructions for my tested Ubuntu 15.10 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_10.md).*
 
-1.) Server process should look like this:
+1.) Server process should look similar to one of these:
 ```sh
+# devicemapper default setup
 $ ps -ef |grep -i docker
 docker daemon -H fd:// -s devicemapper --storage-opt dm.basesize=30G
+
+OR
+
+# devicemapper w/ segmented volumes - recommended setup
+$ ps -ef |grep -i docker
+docker daemon -H fd:// -s devicemapper --storage-opt dm.datadev=/dev/docker_dmapper/data --storage-opt dm.metadatadev=/dev/docker_dmapper/metadata --storage-opt dm.basesize=40G
 ```
 
 2.) Docker info should return these critical components:

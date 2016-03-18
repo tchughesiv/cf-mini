@@ -1,10 +1,10 @@
 # Ubuntu & Docker w/ devicemapper 15.10 install notes
 
-_IF starting with **Ubuntu 14.04 (Trusty Tahr)**, start here and continue through the end:_
+IF starting with **Ubuntu 14.04 (Trusty Tahr)**, start here and continue through the end:
 
 ```shell
 # upgrade to Ubuntu 15.10 (Wily Werewolf)
-$ apt-get update && apt-get install update-manager-core
+$ apt-get update && apt-get -y install update-manager-core
 $ vi /etc/update-manager/release-upgrades
 Prompt=normal
 
@@ -16,7 +16,7 @@ Release:	15.10
 Codename:	wily
 ```
 
-_IF starting with **Ubuntu 15.10 (Wily Werewolf)**, start here:_
+IF starting with **Ubuntu 15.10 (Wily Werewolf)**, start here:
 
 ```shell
 $ apt-get update && apt-get -y install libdevmapper* libudev* udev aufs-tools libdevmapper-event* libudev-dev libdevmapper-dev golang make gcc btrfs-tools libsqlite3-dev overlayroot debootstrap linux-image-generic linux-image-extra-$(uname -r) curl apt-transport-https ca-certificates && apt-get upgrade
@@ -33,21 +33,52 @@ ii  udev                                225-1ubuntu9                    amd64   
 $ vi /etc/apt/sources.list.d/docker.list
 deb https://apt.dockerproject.org/repo ubuntu-wily main
 
-$ apt-get update
-$ apt-get purge lxc-docker
-$ apt-cache policy docker-engine
-$ apt-get update && apt-get install docker-engine
+$ apt-get update && apt-get purge lxc-docker
+$ apt-cache policy docker-engine && apt-get -y install docker-engine
 $ systemctl enable docker
 $ vi /lib/systemd/system/docker.service
 [Service]
 Type=notify
 EnvironmentFile=/etc/default/docker
 ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
+```
 
+_Choose DEFAULT or RECOMMENDED (segmented data volume) path for devicemapper setup._
+
+### DEFAULT ###
+```shell
 $ vi /etc/default/docker
 DOCKER_OPTS="-s devicemapper --storage-opt dm.basesize=30G"
 
 $ systemctl daemon-reload
+```
+
+_OR_
+
+### RECOMMENDED ###
+```shell
+# add 50GB or more of raw disk to your server
+$ apt-get -y install lvm2
+
+# find addtl disk ... make note of disk path
+$ fdisk -l
+
+# use addtl disk to create dedicated volumes ("/dev/sdd" could be different on your server)
+$ pvcreate /dev/sdd
+$ vgcreate docker_dmapper /dev/sdd
+$ lvcreate --wipesignatures y -n data docker_dmapper -l 95%VG
+$ lvcreate --wipesignatures y -n metadata docker_dmapper -l 5%VG
+
+$ vi /etc/default/docker
+DOCKER_OPTS="-s devicemapper --storage-opt dm.datadev=/dev/docker_dmapper/data --storage-opt dm.metadatadev=/dev/docker_dmapper/metadata --storage-opt dm.basesize=40G"
+
+$ systemctl stop docker
+$ rm -rf /var/lib/docker
+$ systemctl daemon-reload
+```
+
+Finish configuration:
+```shell
 $ vi /etc/default/grub
 GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
 
