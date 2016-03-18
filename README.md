@@ -4,7 +4,7 @@ Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 [![](https://badge.imagelayers.io/tchughesiv/cf-mini:latest.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
 
  - Ubuntu Trusty 14.04
- - Cloud Foundry v215
+ - Cloud Foundry v221
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
@@ -14,7 +14,7 @@ CF Mini makes it a 2-step process... Pull & Run with Docker.
 
 A Docker server using "devicemapper w/ udev sync enabled" & at least 30gb disk is highly recommended. I intend to do further testing with the btrfs & overlay storage options soon. One's working Docker Server environment must have the following two critical things configured or performance will suffer.
 
-*[Installation instructions for my tested Ubuntu 15.04 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_04.md).*
+*[Installation instructions for my tested Ubuntu 15.10 server build are here](https://github.com/tchughesiv/cf-mini/blob/master/ubuntu15_10.md).*
 
 1.) Server process should look like this:
 ```sh
@@ -43,7 +43,7 @@ $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p
 
 # dns:
 
-The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.04 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
+The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.10 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
 
 Ubuntu DNS server setup:
 ```sh
@@ -87,7 +87,7 @@ PING api.cf-mini.example (10.x.x.x): 56 data bytes
 
 # connect:
 
-Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.04 Docker server with 4 procs it took about 5 minutes consistently.
+Cloud Foundry should take anywhere from 4 to 10 minutes to initialize the first time you run the container (depending on your Docker server setup).  In my tests on an Ubuntu 15.10 Docker server with 4 procs it took about 5 minutes consistently.
 
 You'll know the stack is ready for use when you're able to access this ruby app:
 
@@ -102,8 +102,8 @@ To connect via cli:
 $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 ```
 
-CLI version 6.12.3 works well with the stack:
+CLI version 6.13.0 works well with the stack:
 
-<https://github.com/cloudfoundry/cli/releases/tag/v6.12.3>
+<https://github.com/cloudfoundry/cli/releases/tag/v6.13.0>
 
 ![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")
