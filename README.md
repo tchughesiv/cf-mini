@@ -3,6 +3,13 @@ Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
  - Ubuntu Trusty 14.04
  - Cloud Foundry v237
+ - Buildpacks installed:
+	- ruby-buildpack
+	- nodejs-buildpack
+	- java-offline-buildpack
+	- binary-buildpack
+	- go-buildpack
+	- staticfile-buildpack
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
