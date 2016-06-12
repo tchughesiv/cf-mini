@@ -1,6 +1,6 @@
 # Cloud Foundry running stack
-# version 0.3
-FROM tchughesiv/cf-mini-release:v221
+# version 0.4
+FROM tchughesiv/cf-mini-release:v237
 MAINTAINER Tommy Hughes <tchughesiv@gmail.com>
 
 RUN locale-gen en_US.UTF-8  
@@ -9,7 +9,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 ENV HOME /root
-ENV INSTALLER_BRANCH v221
+ENV INSTALLER_BRANCH v237
 ENV NISE_DOMAIN cf-mini.example
 ENV NISE_PASSWORD c1oudc0w
 

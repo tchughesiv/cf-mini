@@ -1,10 +1,8 @@
 # CF Mini
 Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
-[![](https://badge.imagelayers.io/tchughesiv/cf-mini:latest.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
-
  - Ubuntu Trusty 14.04
- - Cloud Foundry v221
+ - Cloud Foundry v237
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
@@ -109,8 +107,8 @@ To connect via cli:
 $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 ```
 
-CLI version 6.13.0 works well with the stack:
+CLI version 6.19.0 works well with the stack:
 
-<https://github.com/cloudfoundry/cli/releases/tag/v6.13.0>
+<https://github.com/cloudfoundry/cli/releases/tag/v6.19.0>
 
 ![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")

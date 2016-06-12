@@ -125,4 +125,3 @@ done
 /var/vcap/bosh/bin/monit stop all
 /var/vcap/bosh/bin/monit stop all
 /var/vcap/bosh/bin/monit stop all
-/var/vcap/bosh/bin/monit stop all
