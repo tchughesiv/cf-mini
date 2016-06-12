@@ -38,12 +38,14 @@ echo "nameserver 8.8.8.8
 nameserver 8.8.4.4" >> /etc/resolv.dnsmasq.conf
 sed -i "/^resolv-file/d" /etc/dnsmasq.conf
 echo "resolv-file=/etc/resolv.dnsmasq.conf" >> /etc/dnsmasq.conf
+echo "# Enable forward lookup of the 'consul' domain:
+server=/consul/127.0.0.1#8600" > /etc/dnsmasq.d/10-consul
+sed -i 's/{"dns":53}/{"dns":8600}/g' /var/vcap/jobs/consul_agent/config/config.json
 
 umount /etc/resolv.conf
-### consul specific comments
-# echo "nameserver 127.0.0.1" > /etc/resolv.conf
-grep -i nameserver /etc/resolv.dnsmasq.conf | head -n 2 > /etc/resolv.conf
-# /etc/init.d/dnsmasq restart
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
+grep -i nameserver /etc/resolv.dnsmasq.conf | head -n 2 >> /etc/resolv.conf
+/etc/init.d/dnsmasq restart
 
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_tw_recycle/a echo' ;
