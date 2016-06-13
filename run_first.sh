@@ -46,8 +46,8 @@ umount /etc/resolv.conf
 # required for consul code checks
 resolvconf_head=/etc/resolvconf/resolv.conf.d/head
 resolvconf_base=/etc/resolvconf/resolv.conf.d/base
-echo "nameserver 127.0.0.1" > /etc/resolv.conf
-grep -i nameserver /etc/resolv.dnsmasq.conf > /etc/resolv.conf
+echo "nameserver 127.0.0.1" > $resolvconf_head
+grep -i nameserver /etc/resolv.dnsmasq.conf > $resolvconf_base
 cat $resolvconf_head > /etc/resolv.conf
 cat $resolvconf_base >> /etc/resolv.conf
 /etc/init.d/dnsmasq restart
