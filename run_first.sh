@@ -30,6 +30,7 @@ NISE_IP_ADDRESS=${NISE_IP_ADDRESS:-`ip addr | grep 'inet .*global' | cut -f 6 -d
 sed -i "/${NISE_DOMAIN}/d" /etc/dnsmasq.conf
 sed -i "/cf.internal/d" /etc/dnsmasq.conf
 echo "address=/$NISE_DOMAIN/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
+# comment out now that consul works???
 echo "address=/cf.internal/$NISE_IP_ADDRESS" >> /etc/dnsmasq.conf
 
 cp -p /etc/resolv.conf /etc/resolv.old
@@ -40,11 +41,14 @@ sed -i "/^resolv-file/d" /etc/dnsmasq.conf
 echo "resolv-file=/etc/resolv.dnsmasq.conf" >> /etc/dnsmasq.conf
 echo "# Enable forward lookup of the 'consul' domain:
 server=/consul/127.0.0.1#8600" > /etc/dnsmasq.d/10-consul
-# sed -i 's/{"dns":53}/{"dns":8600}/g' /var/vcap/jobs/consul_agent/config/config.json
 
 umount /etc/resolv.conf
-echo "nameserver 127.0.0.1" > /etc/resolv.conf
-grep -i nameserver /etc/resolv.dnsmasq.conf | head -n 2 >> /etc/resolv.conf
+resolvconf_head=/etc/resolvconf/resolv.conf.d/head
+resolvconf_base=/etc/resolvconf/resolv.conf.d/base
+echo "nameserver 127.0.0.1" > $resolvconf_head
+grep -i nameserver /etc/resolv.dnsmasq.conf > $resolvconf_base
+cat $resolvconf_head > /etc/resolv.conf
+cat $resolvconf_base >> /etc/resolv.conf
 /etc/init.d/dnsmasq restart
 
 find /var/vcap/jobs/*/bin/ -type f | xargs sed -i '/tcp_fin_timeout/a echo' ;
@@ -75,7 +79,12 @@ sed -i '/kernel.shmmax/d' /var/vcap/jobs/postgres/bin/postgres_ctl
 /var/vcap/bosh/bin/monit quit
 /var/vcap/bosh/bin/monit
 
-sleep 5
+# cp -p /var/vcap/jobs/consul_agent/config/config.json /var/vcap/jobs/consul_agent/config/config.new.json
+# sed -i 's/,"services"/,"ports":{"dns":8600},"services"/g' /var/vcap/jobs/consul_agent/confab.json
+# sed -i 's/{"dns":53}/{"dns":8600}/g' /var/vcap/jobs/consul_agent/config/config.json
+# sed -i "s/${NISE_IP_ADDRESS}/127.0.0.1/g" /var/vcap/jobs/consul_agent/config/config.json
+# cp -rp /var/vcap/jobs/consul_agent/config /var/vcap/jobs/consul_agent/config.new
+
 echo "Starting postres job..."
 /var/vcap/bosh/bin/monit start postgres
 
