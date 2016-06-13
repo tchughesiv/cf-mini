@@ -40,6 +40,7 @@ sed -i "/^resolv-file/d" /etc/dnsmasq.conf
 echo "resolv-file=/etc/resolv.dnsmasq.conf" >> /etc/dnsmasq.conf
 echo "# Enable forward lookup of the 'consul' domain:
 server=/consul/127.0.0.1#8600" > /etc/dnsmasq.d/10-consul
+# sed -i 's/{"dns":53}/{"dns":8600}/g' /var/vcap/jobs/consul_agent/config/config.json
 
 umount /etc/resolv.conf
 echo "nameserver 127.0.0.1" > /etc/resolv.conf
@@ -120,7 +121,6 @@ for ((i=0; i < 120; i++)); do
     sleep 5
     echo
     echo "Waiting for remaining processes to start..."
-    sed -i 's/{"dns":53}/{"dns":8600}/g' /var/vcap/jobs/consul_agent/config/config.json
     echo
 done
 
