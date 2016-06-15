@@ -43,9 +43,11 @@ echo "Waiting for remaining processes to start..."
 echo
 for ((i=0; i < 120; i++)); do
     if ! (/var/vcap/bosh/bin/monit summary | tail -n +3 | grep -v -E "(running|accessible)$"); then
+        sleep 20
         cf login -a https://api.$NISE_DOMAIN -o DevBox -u admin -p $NISE_PASSWORD --skip-ssl-validation
         cf create-space dev
         cf t -s dev
+        # cf enable-feature-flag diego_docker
         cd /root/cf_nise_installer/test_apps/test_app/
         cf push
         echo
