@@ -1,10 +1,15 @@
 # CF Mini
 Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
-[![](https://badge.imagelayers.io/tchughesiv/cf-mini:latest.svg)](https://imagelayers.io/?images=tchughesiv/cf-mini:latest 'Get your own badge on imagelayers.io')
-
  - Ubuntu Trusty 14.04
- - Cloud Foundry v221
+ - Cloud Foundry v237
+ - Buildpacks installed:
+	- ruby-buildpack
+	- nodejs-buildpack
+	- java-offline-buildpack
+	- binary-buildpack
+	- go-buildpack
+	- staticfile-buildpack
 
 Cloud Foundry aims to simplify code deployments... once you have a working PaaS stack anyway. Accomplishing this initial setup/install task of the stack itself, however, can be cumbersome.
 
@@ -43,11 +48,14 @@ Your container might be able to start with the devicemapper defaults, but won't 
 $ docker pull tchughesiv/cf-mini
 ```
 
-# run:
+# run w/ defaults:
 ```sh
 $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 ```
-
+# run with a custom domain and/or password:
+```sh
+$ docker run --privileged -v /lib/modules:/lib/modules:ro -e "NISE_DOMAIN=new.domain" -e "NISE_PASSWORD=pAsSw0rd" -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
+```
 # dns:
 
 The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.10 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
@@ -109,8 +117,8 @@ To connect via cli:
 $ cf login -a https://api.cf-mini.example -u admin -p c1oudc0w --skip-ssl-validation
 ```
 
-CLI version 6.13.0 works well with the stack:
+CLI version 6.19.0 works well with the stack:
 
-<https://github.com/cloudfoundry/cli/releases/tag/v6.13.0>
+<https://github.com/cloudfoundry/cli/releases/tag/v6.19.0>
 
 ![gif not loading](https://raw.githubusercontent.com/tchughesiv/images/master/cfmini.gif "CF-Mini Demo")
