@@ -1,0 +1,15 @@
+version: '2'
+services:
+  cf-mini:
+    image: tchughesiv/cf-mini
+    container_name: cf-mini
+    privileged: true
+    ports:
+        - "80:80"
+        - "443:443"
+        - "4443:4443"
+    environment:
+      NISE_DOMAIN: cf-mini.example
+      NISE_PASSWORD: c1oudc0w
+    volumes:
+      - /lib/modules:/lib/modules:ro
