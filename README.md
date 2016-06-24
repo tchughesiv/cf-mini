@@ -43,11 +43,6 @@ Udev Sync Supported: true
 
 Your container might be able to start with the devicemapper defaults, but won't last long.
 
-# pull:
-```sh
-$ docker pull tchughesiv/cf-mini
-```
-<br />
 # run w/ defaults:
 ```sh
 $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
@@ -61,7 +56,6 @@ $ docker run --privileged -v /lib/modules:/lib/modules:ro -e "NISE_DOMAIN=new.do
 # run w/ docker compose
 ```sh
 $ curl -kO https://raw.githubusercontent.com/tchughesiv/cf-mini/master/docker-compose.yml
-$ docker-compose pull
 $ docker-compose up -d
 ```
 <br />
