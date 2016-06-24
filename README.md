@@ -47,18 +47,18 @@ Your container might be able to start with the devicemapper defaults, but won't 
 ```sh
 $ docker run --privileged -v /lib/modules:/lib/modules:ro -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 ```
-
+  
 ## run w/ custom domain & passwd:
 ```sh
 $ docker run --privileged -v /lib/modules:/lib/modules:ro -e "NISE_DOMAIN=new.domain" -e "NISE_PASSWORD=pAsSw0rd" -p 80:80 -p 443:443 -p 4443:4443 -tdi tchughesiv/cf-mini
 ```
-
+  
 ## run w/ docker compose
 ```sh
 $ curl -kO https://raw.githubusercontent.com/tchughesiv/cf-mini/master/docker-compose.yml
 $ docker-compose up -d
 ```
-
+  
 # dns:
 
 The Dev space where your IDE/Browser/CLI are run that interface with CF must have a working internal DNS server setup for wildcard lookups against the fake "cf-mini.example" domain. Without this, you can't interact with CF outside of the Docker container.  The following is how I accomplished this on Ubuntu 15.10 (it will work on 12 & 14 also).  Similar solutions exist for other OS types. I've included a working Mac solution as well.
