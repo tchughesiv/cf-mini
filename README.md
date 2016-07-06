@@ -1,6 +1,8 @@
 # CF Mini
 Docker image running Cloud Foundry stack - listens on ports 80/443/4443
 
+_**[Here's a blog on the initial build.](https://www.ctl.io/developers/blog/post/running-a-paas-in-docker/)**_
+
  - Ubuntu Trusty 14.04
  - Cloud Foundry v237
  - Buildpacks installed:
